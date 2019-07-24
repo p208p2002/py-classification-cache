@@ -1,0 +1,4 @@
+*.zip
+.vscode/
+.kmcache/
+__pycache__
