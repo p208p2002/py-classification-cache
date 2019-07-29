@@ -16,6 +16,7 @@ class PCC():
                 f.write("*\n!.gitignore\n")
     
     def __parseHead(self,key):
+        key = key[0]
         parseResult = pinyin(key, style=Style.INITIALS, strict=False)
         parseResultHead = parseResult[0][0]
         parseResultHead = re.sub(r"[^A-Za-z|0-9]+", '', parseResultHead) #僅保留英文與數字
@@ -55,6 +56,7 @@ class PCC():
         
         #
         key = key + '.pkl'
+        # print(CACHE_DIR + '/' + parseResultHead + '/' + key)
         with open(CACHE_DIR + '/' + parseResultHead + '/' + key , 'wb') as f:
             pickle.dump(data,f)
     
@@ -63,8 +65,14 @@ class PCC():
         subDir = self.__parseHead(key)
         CACHE_DIR = self.CACHE_DIR
         try:
+            # print(CACHE_DIR + '/' + subDir + '/' + key)
             with open(CACHE_DIR + '/' + subDir + '/' + key, 'rb') as f:
                 data = pickle.load(f)
             return data
         except:
             return None
+
+# if __name__ == "__main__":
+#     pycache = PCC()
+#     pycache.save("←",[1,2])
+#     pycache.get("←")
