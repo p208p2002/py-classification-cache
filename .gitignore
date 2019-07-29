@@ -2,3 +2,5 @@
 .vscode/
 .kmcache/
 __pycache__
+build/
+dist/
