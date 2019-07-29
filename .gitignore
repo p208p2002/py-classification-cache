@@ -4,3 +4,4 @@
 __pycache__
 build/
 dist/
+py_classification_cache.egg-info/
