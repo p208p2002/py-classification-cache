@@ -3,12 +3,10 @@ import pickle
 import re
 import time
 import os
-with open('splitdata/seg_lists_0.pkl','rb') as f:
-    data = pickle.load(f)
 
-class ch_cache():
-    def __init__(self,cache_dir = './.ch_cache'):
-        self.CACHE_DIR = './.ch_cache'
+class chcache():
+    def __init__(self,cache_dir = '.ch_cache'):
+        self.CACHE_DIR = cache_dir
         self.__checkCacheDir()
     
     def __checkCacheDir(self):
@@ -29,6 +27,25 @@ class ch_cache():
             pass
         return parseResultHead
     
+    def remove(self, key):
+        CACHE_DIR = self.CACHE_DIR
+        parseResultHead = self.__parseHead(key)
+        key = key + '.pkl'        
+        try:
+            os.remove(CACHE_DIR + '/' + parseResultHead + '/' + key)    
+        except:
+            pass
+
+    def clearCache(self):
+        top = self.CACHE_DIR
+        for root, dirs, files in os.walk(top, topdown=False):
+            for name in files:
+                if name in ['.gitignore']: #file name white list
+                    continue
+                os.remove(os.path.join(root, name))
+            for name in dirs:
+                os.rmdir(os.path.join(root, name))
+
     def save(self, key, data):
         CACHE_DIR = self.CACHE_DIR        
         parseResultHead = self.__parseHead(key)
@@ -51,10 +68,3 @@ class ch_cache():
             return data
         except:
             return None
-
-
-if __name__ == "__main__":
-    ch = ch_cache()
-    ch.save("我們",[1,2,3])
-    a = ch.get("我們111")
-    print(a)
