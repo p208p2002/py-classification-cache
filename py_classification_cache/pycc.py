@@ -4,7 +4,7 @@ import re
 import time
 import os
 
-class chcache():
+class PCC():
     def __init__(self,cache_dir = '.ch_cache'):
         self.CACHE_DIR = cache_dir
         self.__checkCacheDir()
